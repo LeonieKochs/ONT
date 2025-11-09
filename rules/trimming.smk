@@ -2,6 +2,7 @@
 # do I want to discard untrimmed?
 # Decide when to gzip !
 import os
+#from glob import glob
 
 SET1 = config["primer_sets"]["set1"]
 SET2 = config["primer_sets"]["set2"]
@@ -13,8 +14,9 @@ BARCODES_SET2 = SET2["barcodes"]
 # Rule for barcodes in set1
 rule trim_primers_set1:
     conda: "../envs/cutadapt.yaml"
-    input:
-        os.path.join(config["demux_fastq_dir"], "barcode{barcode}","*.fastq")
+    input: 
+	"/scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass"
+#lambda wc: sorted(glob(os.path.join(config["demux_fastq_dir"], f"barcode{wc.barcode}", "*.fastq")))
     output:
         "trimmed/barcode{barcode}.fastq.gz"
     params:
@@ -24,7 +26,7 @@ rule trim_primers_set1:
         maxlen = SET1["maxlen"]
     threads: 2
     # Limit this rule to the configured barcodes
-    wildcard_constraint:
+    wildcard_constraints:
         # joint to one string 01|02...
         barcode="|".join(BARCODES_SET1)
     shell:
@@ -37,7 +39,6 @@ rule trim_primers_set1:
         mkdir -p trimmed logs
         cutadapt -g {params.fwd} -a {params.rev} \
           --discard-untrimmed \
-          -m {params.minlen} -M {params.maxlen} \
           -o {output} {input} > logs/barcode{wildcards.barcode}_cutadapt.log
         """
 
@@ -45,18 +46,17 @@ rule trim_primers_set1:
 rule trim_primers_set2:
     conda: "../envs/cutadapt.yaml"
     input:
-        # change like above ?!
         os.path.join(config["demux_fastq_dir"], "sample_barcode{barcode}.fastq.gz")
 
     output:
-        "trimmed/barcode{barcode}.fastq"
+        "trimmed/barcode{barcode}.fastq.gz"
     params:
         fwd = SET2["fwd"],
         rev = SET2["rev"],
         minlen = SET2["minlen"],
         maxlen = SET2["maxlen"]
     threads: 2
-    wildcard_constraint:
+    wildcard_constraints:
         barcode="|".join(BARCODES_SET2)
     shell:
         r"""
@@ -71,13 +71,14 @@ rule trim_primers_set2:
 
 # add histogram
 rule length_stats:
+    conda: "../envs/cutadapt.yaml"
     input:
         "trimmed/{s}.fastq.gz"
     output:
         "stats/{s}_lengths.txt"
     threads: 1
     shell:
-        """
+        r"""
         mkdir -p stats
         seqkit stats {input} > {output}
         """

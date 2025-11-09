@@ -30,8 +30,8 @@ reads_dir: "/scratch/{USER}/ONT/data_amplicons2/pod5/FBD92602_d57d61d8_b35b091c_
 
 # Where demuxed fastqs land
 # where the basecalled and demultiplexed data is 
-# /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass
-demux_fastq_dir: "results/dorado/demux_fastq"
+demux_fastq_dir: "/scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass"
+#demux_fastq_dir: "results/dorado/demux_fastq"
 
 primer_sets:
   set1:

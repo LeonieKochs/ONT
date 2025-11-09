@@ -33,13 +33,16 @@ rule dorado_basecall:
 	#"CUDA/12.1.1" # ran module load CUDA before hand
     params:
         model = config["model"],
-        dorado = config["dorado_software"]
+        dorado = config["dorado_software"],
+	device = config.get("dorado_device", "cpu"),
+	models_dir = "models"
     shell:
         r"""
         mkdir -p $(dirname {output.basecalls})
-        "{params.dorado}" basecaller {params.model} --no-trim {input.reads_dir} > {output.basecalls}
+        "{params.dorado}" basecaller {params.model} --device {params.device} --models-directory {params.models_dir} --no-trim {input.reads_dir} > {output.basecalls}
         """
 	# deleted --emit-bam, should be default
+	# --models-directory {params.model_dir}
 
 
 # summary for basecalling        
