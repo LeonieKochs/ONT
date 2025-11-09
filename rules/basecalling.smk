@@ -1,12 +1,12 @@
 
-ruleorder:  # optional, just to emphasize model before basecall
+ruleorder:  # just to emphasize model before basecall
     dorado_model > dorado_basecall
 
-# Download/ensure model (keeps things reproducible)
+# Download/ensure model
 rule dorado_model:
     output:
-        # a marker file to make the step idempotent
-        touch(f"models/{config['model']}.ready") # python syntax
+        # a marker file
+        touch(f"models/{config['model']}.ready")
     params:
         model = config["model"],
         dorado = config["dorado_software"]
