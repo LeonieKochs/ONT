@@ -1,0 +1,21 @@
+Building DAG of jobs...
+Using shell: /usr/bin/bash
+Provided remote nodes: 2
+Job stats:
+job                   count
+------------------  -------
+dorado_basecall           1
+dorado_demultiplex        1
+total                     2
+
+Select jobs to execute...
+InputFunctionException in rule dorado_basecall in file /home/kochsl99/projects/ONT/workflow/rules/basecalling.smk, line 22:
+Error:
+  WorkflowError:
+    Failed to evaluate default resources value '--qos=standard'.
+        String arguments may need additional quoting. Ex: --default-resources "tmpdir='/home/user/tmp'".
+    SyntaxError: invalid syntax (<string>, line 1)
+Wildcards:
+
+Traceback:
+ (rule dorado_basecall, line 41, /home/kochsl99/projects/ONT/workflow/rules/basecalling.smk)

@@ -1,0 +1,39 @@
+# Snakemake (>=8.0) new plugin-based executor
+
+executor: slurm
+
+jobs: 5
+use-envmodules: true
+rerun-incomplete: true
+printshellcmds: true
+latency-wait: 60
+restart-times: 2
+
+default-resources:
+  slurm_account: 'agmonaghan'
+  slurm_partition: 'begendiv'
+  slurm_qos: standard
+  mem_mb: 16000
+  runtime: 240
+  gpu: 0 # should it be gpu? or gres?
+
+# SLURM-specific settings for the plugin:
+#slurm:
+  # Please specify a QOS, e.g. '#SBATCH --qos=standard' (see 'sqos' for valid settings)
+  # sbatch: error: Batch job submission failed: Invalid qos specification
+  # To use SLURM’s quality of service flags (--qos to sbatch) the plugin allows specifying 
+  # --slurm-qos=<qos-string>, too. 
+  # Both, the reservation and the qos may be particularly useful in a course setting.
+  #qos: standard # not here? 
+  #partition: begendiv # not here?
+  # No SLURM account given
+  #account: agmonaghan # not here?
+  #nodes: 1
+  #ntasks: 1
+  #gres: "gpu:h100:{resources.gpus}"
+  #mail-user: "{USER}@zedat.fu-berlin.de"
+  #mail-type: "BEGIN,END,FAIL"
+  #output: "logs/slurm/%x-%j.out"
+  #job-name: "smk-{rule}-{jobid}"
+
+# slurm-logdir: "/home/<username>/.snakemake/slurm_logs"

@@ -1,0 +1,76 @@
+Assuming unrestricted shared filesystem usage.
+None
+host: LeoThinkPad
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however important for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Creating conda environment envs/cutadapt.yaml...
+Downloading and installing remote packages.
+CreateCondaEnvironmentException:
+Could not create conda environment from /home/leonie/projects/testNanopore/workflow/envs/cutadapt.yaml:
+Command:
+conda env create --quiet --no-default-packages --file "/home/leonie/projects/testNanopore/workflow/.snakemake/conda/b5423b97750fd18a777b4e9c36ec127e_.yaml" --prefix "/home/leonie/projects/testNanopore/workflow/.snakemake/conda/b5423b97750fd18a777b4e9c36ec127e_"
+Output:
+Channels:
+ - bioconda
+ - conda-forge
+ - defaults
+Platform: linux-64
+Collecting package metadata (repodata.json): ...working... Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc88268860>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /bioconda/linux-64/repodata.json.zst
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc8826ae10>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /pkgs/main/linux-64/repodata.json.zst
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc88269580>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /pkgs/r/linux-64/repodata.json.zst
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc8826a270>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /pkgs/r/noarch/repodata.json.zst
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc88269ca0>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /conda-forge/linux-64/repodata.json.zst
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc882686e0>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /conda-forge/noarch/repodata.json.zst
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc8826a060>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /bioconda/noarch/repodata.json.zst
+
+Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc8826aba0>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /pkgs/main/noarch/repodata.json.zst
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc8826b950>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /conda-forge/linux-64/repodata.json.zst
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc8826b6b0>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /pkgs/r/noarch/repodata.json.zst
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc8826b080>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /bioconda/linux-64/repodata.json.zst
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc8826b530>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /pkgs/r/linux-64/repodata.json.zst
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc8826bd10>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /pkgs/main/noarch/repodata.json.zst
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc8826b1a0>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /pkgs/main/linux-64/repodata.json.zst
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc8826bbf0>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /bioconda/noarch/repodata.json.zst
+
+Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc8826bad0>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /conda-forge/noarch/repodata.json.zst
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc882bcc50>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /conda-forge/noarch/repodata.json.zst
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc882bc170>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /conda-forge/linux-64/repodata.json.zst
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc882bc8f0>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /pkgs/main/noarch/repodata.json.zst
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc882bc6b0>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /bioconda/linux-64/repodata.json.zst
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc882bcb30>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /bioconda/noarch/repodata.json.zst
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc882bc7d0>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /pkgs/r/linux-64/repodata.json.zst
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc882bc4d0>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /pkgs/r/noarch/repodata.json.zst
+
+Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'NewConnectionError('<urllib3.connection.HTTPSConnection object at 0x7fcc882bca10>: Failed to establish a new connection: [Errno 101] Network is unreachable')': /pkgs/main/linux-64/repodata.json.zst
+
+failed
+
+CondaHTTPError: HTTP 000 CONNECTION FAILED for url <https://conda.anaconda.org/bioconda/linux-64/repodata.json>
+Elapsed: -
+
+An HTTP error occurred when trying to retrieve this URL.
+HTTP errors are often intermittent, and a simple retry will get you on your way.
+'https//conda.anaconda.org/bioconda/linux-64'
+
+
+

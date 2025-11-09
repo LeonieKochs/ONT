@@ -1,0 +1,8 @@
+Assuming unrestricted shared filesystem usage.
+None
+host: LeoThinkPad
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however important for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+WorkflowError:
+Failed to open source file /home/leonie/projects/testNanopore/workflow/rules/~/projects/testNanopore/workflow/envs/cutadapt.yaml
+FileNotFoundError: [Errno 2] No such file or directory: '/home/leonie/projects/testNanopore/workflow/rules/~/projects/testNanopore/workflow/envs/cutadapt.yaml'

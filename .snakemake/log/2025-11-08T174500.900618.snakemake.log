@@ -1,0 +1,139 @@
+Assuming unrestricted shared filesystem usage.
+host: login.curta.zedat.fu-berlin.de
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however important for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Creating conda environment envs/cutadapt.yaml...
+Downloading and installing remote packages.
+Cleaning up conda package tarballs.
+Environment for /home/kochsl99/projects/ONT/workflow/rules/../envs/cutadapt.yaml created (location: ../../../.snakemake/conda/7f3d2f185f9eaaf3aae03f3959fe4594_)
+Using shell: /usr/bin/bash
+Provided cores: 4
+Rules claiming more threads will be scaled down.
+Job stats:
+job                  count
+-----------------  -------
+trim_primers_set1        4
+total                    4
+
+Select jobs to execute...
+Failed to solve scheduling problem with ILP solver, falling back to greedy scheduler. You likely have to fix your ILP solver installation. Error message: PULP_CBC_CMD: Not Available (check permissions on cbc)
+Execute 2 jobs...
+[Sat Nov  8 17:46:06 2025]
+localrule trim_primers_set1:
+    input: /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode01/FBD92602_pass_barcode01_d57d61d8_00000000_0.fastq
+    output: trimmed/barcode01.fastq.gz
+    jobid: 3
+    reason: Missing output files: trimmed/barcode01.fastq.gz
+    wildcards: barcode=01
+    threads: 2
+    resources: tmpdir=/tmp
+Shell command: 
+        mkdir -p trimmed logs
+        cutadapt -g GTGYCAGCMGCCGCGGTAA -a CCGYCAATTYMTTTRAGTTT \
+          --discard-untrimmed \
+          -m 380 -M 450 \
+          -o trimmed/barcode01.fastq.gz /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode01/FBD92602_pass_barcode01_d57d61d8_00000000_0.fastq > logs/barcode01_cutadapt.log
+        
+Activating conda environment: ../../../.snakemake/conda/7f3d2f185f9eaaf3aae03f3959fe4594_
+[Sat Nov  8 17:46:06 2025]
+localrule trim_primers_set1:
+    input: /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode03/FBD92602_pass_barcode03_d57d61d8_00000000_0.fastq
+    output: trimmed/barcode03.fastq.gz
+    jobid: 1
+    reason: Missing output files: trimmed/barcode03.fastq.gz
+    wildcards: barcode=03
+    threads: 2
+    resources: tmpdir=/tmp
+Shell command: 
+        mkdir -p trimmed logs
+        cutadapt -g GTGYCAGCMGCCGCGGTAA -a CCGYCAATTYMTTTRAGTTT \
+          --discard-untrimmed \
+          -m 380 -M 450 \
+          -o trimmed/barcode03.fastq.gz /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode03/FBD92602_pass_barcode03_d57d61d8_00000000_0.fastq > logs/barcode03_cutadapt.log
+        
+Activating conda environment: ../../../.snakemake/conda/7f3d2f185f9eaaf3aae03f3959fe4594_
+RuleException:
+CalledProcessError in file "/home/kochsl99/projects/ONT/workflow/rules/trimming.smk", line 36:
+Command 'source /trinity/shared/easybuild/software/Miniconda3/24.7.1-0/bin/activate '/home/kochsl99/.snakemake/conda/7f3d2f185f9eaaf3aae03f3959fe4594_'; set -euo pipefail;  
+        mkdir -p trimmed logs
+        cutadapt -g GTGYCAGCMGCCGCGGTAA -a CCGYCAATTYMTTTRAGTTT \
+          --discard-untrimmed \
+          -m 380 -M 450 \
+          -o trimmed/barcode01.fastq.gz /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode01/FBD92602_pass_barcode01_d57d61d8_00000000_0.fastq > logs/barcode01_cutadapt.log' returned non-zero exit status 127.
+[Sat Nov  8 17:46:06 2025]
+Error in rule trim_primers_set1:
+    message: None
+    jobid: 3
+    input: /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode01/FBD92602_pass_barcode01_d57d61d8_00000000_0.fastq
+    output: trimmed/barcode01.fastq.gz
+    conda-env: /home/kochsl99/.snakemake/conda/7f3d2f185f9eaaf3aae03f3959fe4594_
+    shell:
+        
+        mkdir -p trimmed logs
+        cutadapt -g GTGYCAGCMGCCGCGGTAA -a CCGYCAATTYMTTTRAGTTT \
+          --discard-untrimmed \
+          -m 380 -M 450 \
+          -o trimmed/barcode01.fastq.gz /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode01/FBD92602_pass_barcode01_d57d61d8_00000000_0.fastq > logs/barcode01_cutadapt.log
+        
+        (command exited with non-zero exit code)
+RuleException:
+CalledProcessError in file "/home/kochsl99/projects/ONT/workflow/rules/trimming.smk", line 36:
+Command 'source /trinity/shared/easybuild/software/Miniconda3/24.7.1-0/bin/activate '/home/kochsl99/.snakemake/conda/7f3d2f185f9eaaf3aae03f3959fe4594_'; set -euo pipefail;  
+        mkdir -p trimmed logs
+        cutadapt -g GTGYCAGCMGCCGCGGTAA -a CCGYCAATTYMTTTRAGTTT \
+          --discard-untrimmed \
+          -m 380 -M 450 \
+          -o trimmed/barcode03.fastq.gz /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode03/FBD92602_pass_barcode03_d57d61d8_00000000_0.fastq > logs/barcode03_cutadapt.log' returned non-zero exit status 127.
+[Sat Nov  8 17:46:06 2025]
+Error in rule trim_primers_set1:
+    message: None
+    jobid: 1
+    input: /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode03/FBD92602_pass_barcode03_d57d61d8_00000000_0.fastq
+    output: trimmed/barcode03.fastq.gz
+    conda-env: /home/kochsl99/.snakemake/conda/7f3d2f185f9eaaf3aae03f3959fe4594_
+    shell:
+        
+        mkdir -p trimmed logs
+        cutadapt -g GTGYCAGCMGCCGCGGTAA -a CCGYCAATTYMTTTRAGTTT \
+          --discard-untrimmed \
+          -m 380 -M 450 \
+          -o trimmed/barcode03.fastq.gz /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode03/FBD92602_pass_barcode03_d57d61d8_00000000_0.fastq > logs/barcode03_cutadapt.log
+        
+        (command exited with non-zero exit code)
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look below for error messages
+[Sat Nov  8 17:46:11 2025]
+Error in rule trim_primers_set1:
+    message: None
+    jobid: 3
+    input: /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode01/FBD92602_pass_barcode01_d57d61d8_00000000_0.fastq
+    output: trimmed/barcode01.fastq.gz
+    conda-env: /home/kochsl99/.snakemake/conda/7f3d2f185f9eaaf3aae03f3959fe4594_
+    shell:
+        
+        mkdir -p trimmed logs
+        cutadapt -g GTGYCAGCMGCCGCGGTAA -a CCGYCAATTYMTTTRAGTTT \
+          --discard-untrimmed \
+          -m 380 -M 450 \
+          -o trimmed/barcode01.fastq.gz /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode01/FBD92602_pass_barcode01_d57d61d8_00000000_0.fastq > logs/barcode01_cutadapt.log
+        
+        (command exited with non-zero exit code)
+[Sat Nov  8 17:46:11 2025]
+Error in rule trim_primers_set1:
+    message: None
+    jobid: 1
+    input: /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode03/FBD92602_pass_barcode03_d57d61d8_00000000_0.fastq
+    output: trimmed/barcode03.fastq.gz
+    conda-env: /home/kochsl99/.snakemake/conda/7f3d2f185f9eaaf3aae03f3959fe4594_
+    shell:
+        
+        mkdir -p trimmed logs
+        cutadapt -g GTGYCAGCMGCCGCGGTAA -a CCGYCAATTYMTTTRAGTTT \
+          --discard-untrimmed \
+          -m 380 -M 450 \
+          -o trimmed/barcode03.fastq.gz /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass/barcode03/FBD92602_pass_barcode03_d57d61d8_00000000_0.fastq > logs/barcode03_cutadapt.log
+        
+        (command exited with non-zero exit code)
+Complete log(s): /home/kochsl99/projects/ONT/workflow/.snakemake/log/2025-11-08T174500.900618.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

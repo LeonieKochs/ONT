@@ -1,0 +1,53 @@
+# for customizing
+
+# choose the quality for the dorado run
+# dna_r10.4.1_e8.2_400bps_fast -> fast, low accuracy
+# dna_r10.4.1_e8.2_400bps_hac  -> high accuracy
+# dna_r10.4.1_e8.2_400bps_sup  -> super accuracy
+model: "dna_r10.4.1_e8.2_400bps_sup@v5.2.0"
+
+# path to software (dorado) ?
+dorado_software: "/home/kochsl99/software/dorado/dorado-1.2.0-linux-x64/bin/dorado"
+
+# flowcell / kit type
+kit: "SQK-NBD114-24"
+
+# used  in dorado_basecall
+reads_dir: "/scratch/{USER}/ONT/data_amplicons2/pod5/FBD92602_d57d61d8_b35b091c_10.pod5"
+# temp edit for testing just one file
+
+
+
+# temporarily override with --config
+# eg:
+# snakemake --use-envmodules \
+# --config reads_dir="/scratch/$USER/newrun/pod5" \
+#          model="dna_r10.4.1_e8.2_400bps_fast" \
+#          kit="SQK-RBK114-24" \
+#          outdir="results/dorado_fast" \
+#          emit="bam"
+
+
+# Where demuxed fastqs land
+# where the basecalled and demultiplexed data is 
+# /scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass
+demux_fastq_dir: "results/dorado/demux_fastq"
+
+primer_sets:
+  set1:
+    name: "515FY-926R"
+    fwd: "GTGYCAGCMGCCGCGGTAA"  # Y = [CT] (pyrimidine)
+    rev: "CCGYCAATTYMTTTRAGTTT" # M = [AT] (amino) R = [AG] (purine)
+    minlen: 380
+    maxlen: 450
+    # barcode01, barcode 02, ...
+    barcodes: ["01","02","03","04"]
+
+  # primers?
+  set2:
+    name: "Illumina_overhang_DIV4_P5-P7"
+    fwd: "TCGTCGGCAGCGTCAGATGTGTATAAGAGACAG" # ?
+    rev: "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG" # ?
+    minlen: 380
+    maxlen: 450
+    barcodes: ["05","06","07","08","09","10","11","12"]

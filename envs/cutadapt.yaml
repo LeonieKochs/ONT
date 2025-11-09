@@ -1,0 +1,8 @@
+name: cutadapt_env
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - cutadapt # =4.6
+  - seqkit # =2.8
+  # pin version for reproducibility

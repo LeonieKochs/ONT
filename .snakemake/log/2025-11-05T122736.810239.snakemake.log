@@ -1,0 +1,12 @@
+Building DAG of jobs...
+Your conda installation is not configured to use strict channel priorities. This is however crucial for having robust and correct environments (for details, see https://conda-forge.org/docs/user/tipsandtricks.html). Please consider to configure strict priorities by executing 'conda config --set channel_priority strict'.
+Creating conda environment envs/cutadapt.yaml...
+Downloading and installing remote packages.
+CreateCondaEnvironmentException:
+Could not create conda environment from /home/kochsl99/projects/ONT/workflow/rules/../envs/cutadapt.yaml:
+Command:
+mamba env create --quiet --file "/home/kochsl99/.snakemake/conda_envs/84904338dbaf8533411bd1d6ab5caa1a_.yaml" --prefix "/home/kochsl99/.snakemake/conda_envs/84904338dbaf8533411bd1d6ab5caa1a_"
+Output:
+error    libmamba Non-conda folder exists at prefix - aborting.
+critical libmamba Non-conda folder exists at prefix - aborting.
+
