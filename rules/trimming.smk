@@ -15,8 +15,9 @@ BARCODES_SET2 = SET2["barcodes"]
 rule trim_primers_set1:
     conda: "../envs/cutadapt.yaml"
     input: 
-	"/scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass"
-#lambda wc: sorted(glob(os.path.join(config["demux_fastq_dir"], f"barcode{wc.barcode}", "*.fastq")))
+        os.path.join(config["demux_fastq_dir"], "barcode{barcode}", "FBD92602_pass_barcode{barcode}_d57d61d8_00000000_0.fastq")
+		#"/scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass"
+		#lambda wc: sorted(glob(os.path.join(config["demux_fastq_dir"], f"barcode{wc.barcode}", "*.fastq")))
     output:
         "trimmed/barcode{barcode}.fastq.gz"
     params:
