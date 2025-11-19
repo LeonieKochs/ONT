@@ -10,6 +10,7 @@ os.makedirs("logs/slurm", exist_ok=True)
 
 #include: "rules/basecalling.smk"
 include: "rules/trimming.smk"
+include: "rules/dereplicating.smk"
 
 BARCODES_ALL = (
     config["primer_sets"]["set1"]["barcodes"]
@@ -23,5 +24,6 @@ rule all:
         #"results/dorado/basecall_summary.tsv",
         #"results/dorado/demux_fastq",
         expand("trimmed/barcode{barcode}.fastq.gz", barcode=BARCODES_ALL)
+        expand("dereplicated/barcode{barcode}.fastq.gz", barcode=BARCODES_ALL)
 
 

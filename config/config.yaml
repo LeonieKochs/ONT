@@ -54,3 +54,7 @@ primer_sets:
     minlen: 380
     maxlen: 450
     barcodes: ["05","06","07","08","09","10","11","12"]
+
+
+# used in dereplicting
+trimmed_fastq_dir: "trimmed/barcode{barcode}.fastq.gz"

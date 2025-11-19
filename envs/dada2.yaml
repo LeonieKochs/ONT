@@ -1,0 +1,10 @@
+name: dada2
+channels:
+  - bioconda
+  - conda-forge
+dependencies:
+  - r-base=4.3
+  - bioconductor-dada2 # package for dereplication etc
+  - bioconductor-biostrings # installed automatically?
+  - r-optparse # command-line argument parsing ?
+  - r-ggplot2 # plotting library
