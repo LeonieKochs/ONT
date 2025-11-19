@@ -1,7 +1,0 @@
-name: cutadapt_env
-channels:
-  - bioconda
-  - conda-forge
-dependencies:
-  - cutadapt
-  - seqkit

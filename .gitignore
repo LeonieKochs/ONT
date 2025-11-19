@@ -1,0 +1,10 @@
+# Snakemake cache
+.snakemake/
+
+# Python/conda stuff
+__pycache__/
+*.log
+
+# ignore logs and trimmed data
+logs/
+trimmed/
