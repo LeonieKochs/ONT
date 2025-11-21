@@ -36,6 +36,7 @@ rule trim_primers_set1:
         # -m discard processed reads that are shorter than LENGTH
         # -M discard processed reads that are longer than LENGTH
         # --discard-untrimmed discard reads in which no adapter was found 
+		# -a "A{20}" -a "T{20}" cut out the long T regions ? 
         r"""
         mkdir -p trimmed logs
         cutadapt -g {params.fwd} -a {params.rev} \
