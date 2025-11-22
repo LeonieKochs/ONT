@@ -19,7 +19,7 @@ rule trim_primers_set1:
 		#"/scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass"
 		#lambda wc: sorted(glob(os.path.join(config["demux_fastq_dir"], f"barcode{wc.barcode}", "*.fastq")))
     output:
-        "trimmed/barcode{barcode}.fastq.gz"
+        "f"{config['output_dir']}/trimmed/barcode{{barcode}}.fastq.gz"
     params:
         fwd = SET1["fwd"],
         rev = SET1["rev"],
@@ -51,7 +51,9 @@ rule trim_primers_set2:
         os.path.join(config["demux_fastq_dir"], "sample_barcode{barcode}.fastq.gz")
 
     output:
-        "trimmed/barcode{barcode}.fastq.gz"
+        output:
+            f"{config['output_dir']}/trimmed/barcode{{barcode}}.fastq.gz"
+	#"trimmed/barcode{barcode}.fastq.gz"
     params:
         fwd = SET2["fwd"],
         rev = SET2["rev"],

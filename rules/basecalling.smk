@@ -25,7 +25,7 @@ rule dorado_basecall:
         model_ok = f"models/{config['model']}.ready"
     output:
 	# test run, delete test/ later
-        basecalls = "test/results/dorado/basecalls.bam"
+        basecalls = f"{config['output_dir']}/dorado/basecalls.bam"
     threads: 4
     #resources: # test without slurm/gpu
         #gpus = 1
@@ -65,7 +65,7 @@ rule dorado_demultiplex:
         bam = rules.dorado_basecall.output.basecalls
     output:
 	# test run, delete test/ later
-        demux_dir = directory("test/results/dorado/demux_fastq")
+        demux_dir = directory(f"{config['output_dir']}/dorado/demux_fastq")
     params:
         kit = config["kit"],
         dorado = config["dorado_software"]
