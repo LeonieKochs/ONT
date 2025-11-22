@@ -1,12 +1,5 @@
 # dereplication dada2
-
-rule all:
-    input:
-        # final output
-        "dada2/seqtab.nochim.rds",
-        "dada2/track.tsv",
-        "dada2/chao_curves.pdf"
-
+import os
 
 rule dereplicate:
     input:
@@ -21,7 +14,7 @@ rule dereplicate:
 
 rule learn_errors:
     input:
-        expand("dada2/derep/barcode{barcode}.rds", barcode=ALL_BARCODES)
+        expand("dada2/derep/barcode{barcode}.rds", barcode=BARCODES_ALL)
     output:
         "dada2/errors.rds"
     conda:
@@ -44,7 +37,7 @@ rule dada:
 
 rule make_seqtab:
     input:
-        expand("dada2/dd/barcode{barcode}.rds", barcode=ALL_BARCODES)
+        expand("dada2/dd/barcode{barcode}.rds", barcode=BARCODES_ALL)
     output:
         "dada2/seqtab.rds"
     conda:

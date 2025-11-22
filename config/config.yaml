@@ -44,7 +44,7 @@ primer_sets:
     minlen: 380
     maxlen: 450
     # barcode01, barcode 02, ...
-    barcodes: ["01","02","03","04"]
+    barcodes: ["01"] #,"02","03","04"
 
   # primers?
   set2:
@@ -53,8 +53,8 @@ primer_sets:
     rev: "GTCTCGTGGGCTCGGAGATGTGTATAAGAGACAG" # ?
     minlen: 380
     maxlen: 450
-    barcodes: ["05","06","07","08","09","10","11","12"]
+    barcodes: [] #"05","06","07","08","09","10","11","12"
 
 
 # used in dereplicting
-trimmed_fastq_dir: "trimmed/barcode{barcode}.fastq.gz"
+trimmed_fastq_dir: "/home/leonie/projects/testNanopore/data/trimmed/"
