@@ -9,7 +9,7 @@ rule dereplicate:
     conda:
         "../envs/dada2.yaml"
     script:
-        "scripts/dereplicate.R"
+        "../scripts/dereplicate.R"
 
 
 rule learn_errors:
@@ -20,7 +20,7 @@ rule learn_errors:
     conda:
         "../envs/dada2.yaml"
     script:
-        "scripts/errors.R"
+        "../scripts/errors.R"
 
 
 rule dada:
@@ -32,7 +32,7 @@ rule dada:
     conda:
         "../envs/dada2.yaml"
     script:
-        "scripts/dada.R"
+        "../scripts/dada.R"
 
 
 rule make_seqtab:
@@ -43,7 +43,7 @@ rule make_seqtab:
     conda:
         "../envs/dada2.yaml"
     script:
-        "scripts/seqtab.R"
+        "../scripts/seqtab.R"
 
 
 rule remove_chimeras:
@@ -54,7 +54,7 @@ rule remove_chimeras:
     conda:
         "../envs/dada2.yaml"
     script:
-        "scripts/chimeras.R"
+        "../scripts/chimeras.R"
 
 
 rule summary_plots:
@@ -66,4 +66,4 @@ rule summary_plots:
     conda:
         "../envs/dada2.yaml"
     script:
-        "scripts/summary_plots.R"
+        "../scripts/summary_plots.R"
