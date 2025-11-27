@@ -3,9 +3,9 @@ import os
 
 rule dereplicate:
     input:
-        lambda w: os.path.join(config["trimmed_fastq_dir"], f"barcode{w.barcode}.fastq.gz")
+        lambda w: os.path.join(TRIMMED_DIR, f"barcode{w.barcode}.fastq.gz")
     output:
-        f"{config['output_dir']}/dada2/derep/barcode{{barcode}}.rds"
+        os.path.join(OUTPUT_DIR, "dada2", "derep", "barcode{barcode}.rds")
     conda:
         "../envs/dada2.yaml"
     script:
@@ -16,7 +16,7 @@ rule learn_errors:
     input:
         expand("dada2/derep/barcode{barcode}.rds", barcode=BARCODES_ALL)
     output:
-        f"{config['output_dir']}/dada2/errors.rds"
+        f"{OUTPUT_DIR}/dada2/errors.rds"
     conda:
         "../envs/dada2.yaml"
     script:
@@ -28,7 +28,7 @@ rule dada:
         derep="dada2/derep/barcode{barcode}.rds",
         err="dada2/errors.rds"
     output:
-        f"{config['output_dir']}/dada2/dd/barcode{barcode}.rds"
+        f"{OUTPUT_DIR}/dada2/dd/barcode{barcode}.rds"
     conda:
         "../envs/dada2.yaml"
     script:
@@ -39,7 +39,7 @@ rule make_seqtab:
     input:
         expand("dada2/dd/barcode{barcode}.rds", barcode=BARCODES_ALL)
     output:
-        f"{config['output_dir']}/dada2/seqtab.rds"
+        f"{OUTPUT_DIR}/dada2/seqtab.rds"
     conda:
         "../envs/dada2.yaml"
     script:
@@ -50,7 +50,7 @@ rule remove_chimeras:
     input:
         "dada2/seqtab.rds"
     output:
-        f"{config['output_dir']}/dada2/seqtab.nochim.rds"
+        f"{OUTPUT_DIR}/dada2/seqtab.nochim.rds"
     conda:
         "../envs/dada2.yaml"
     script:
