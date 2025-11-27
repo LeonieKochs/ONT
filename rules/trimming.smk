@@ -13,11 +13,9 @@ BARCODES_SET2 = SET2["barcodes"]
 rule trim_primers_set1:
     conda: "../envs/cutadapt.yaml"
     input: 
-        os.path.join(DEMUX_DIR, "barcode{barcode}", "FBD92602_pass_barcode{barcode}_d57d61d8_00000000_0.fastq.gz")
-		#"/scratch/kochsl99/ONT/data_amplicons2/dorado/dorado_demux_trimmed.v.1.2.0/unknown/20251015_1004_0_FBD92602_d57d61d8/fastq_pass"
-		#lambda wc: sorted(glob(os.path.join(config["demux_fastq_dir"], f"barcode{wc.barcode}", "*.fastq")))
+        lambda wc: os.path.join(DEMUX_DIR, f"barcode{wc.barcode}", f"FBD92602_pass_barcode{wc.barcode}_d57d61d8_00000000_0.fastq.gz")
     output:
-        f"TRIMMED_DIR/trimmed/barcode{{barcode}}.fastq.gz"
+        lambda wc: os.path.join(TRIMMED_DIR, f"barcode{wc.barcode}.fastq.gz")
     params:
         fwd = SET1["fwd"],
         rev = SET1["rev"],
@@ -35,7 +33,7 @@ rule trim_primers_set1:
         # -M discard processed reads that are longer than LENGTH
         # --discard-untrimmed discard reads in which no adapter was found 
         r"""
-        mkdir -p trimmed logs
+        mkdir -p {TRIMMED_DIR} logs
         cutadapt -g {params.fwd} -a {params.rev} \
           --discard-untrimmed \
           -m {params.minlen} -M {params.maxlen} \
@@ -47,11 +45,10 @@ rule trim_primers_set1:
 rule trim_primers_set2:
     conda: "../envs/cutadapt.yaml"
     input:
-        os.path.join(DEMUX_DIR, "sample_barcode{barcode}.fastq.gz")
+        lambda wc: os.path.join(DEMUX_DIR, f"sample_barcode{wc.barcode}.fastq.gz")
     output:
         output:
-            f"TRIMMED_DIR/trimmed/barcode{{barcode}}.fastq.gz"
-	#"trimmed/barcode{barcode}.fastq.gz"
+            lambda wc: os.path.join(TRIMMED_DIR, f"barcode{wc.barcode}.fastq.gz")
     params:
         fwd = SET2["fwd"],
         rev = SET2["rev"],
@@ -76,7 +73,7 @@ rule trim_primers_set2:
 rule length_stats:
     conda: "../envs/cutadapt.yaml"
     input:
-        "trimmed/{s}.fastq.gz"
+        lambda wc: os.path.join(TRIMMED_DIR, f"{wc.s}.fastq.gz")
     output:
         "stats/{s}_lengths.txt"
     threads: 1
