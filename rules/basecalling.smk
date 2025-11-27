@@ -6,12 +6,12 @@ ruleorder:  # just to emphasize model before basecall
 rule dorado_model:
     output:
         # a marker file
-        touch(f"models/{config['model']}.ready")
+        touch(f"models/DORADO_MODEL.ready")
     params:
-        model = config["model"],
-        dorado = config["dorado_software"]
+        model = DORADO_MODEL,
+        dorado = DORADO_BIN
     shell:
-        # module load dorado/0.9.1-foss-2023a-CUDA-12.1.1
+        # module load dorado/0.9.1-foss-2023a-CUDA-12.1.1 # in shell script?
         r"""
         mkdir -p models
         "{params.dorado}" download --model {params.model} --directory models
@@ -21,21 +21,21 @@ rule dorado_model:
 # Basecalling from POD5 directory to BAM
 rule dorado_basecall:
     input:
-        reads_dir = config["reads_dir"],
-        model_ok = f"models/{config['model']}.ready"
+        reads_dir = directory(READS_DIR),
+        model_ok = f"models/DORADO_MODEL.ready"
     output:
-	# test run, delete test/ later
-        basecalls = f"{config['output_dir']}/dorado/basecalls.bam"
+        basecalls=os.path.join(OUTPUT_DIR, "dorado", "basecalls.bam")
     threads: 4
-    #resources: # test without slurm/gpu
-        #gpus = 1
-    #envmodules:
-	#"CUDA/12.1.1" # ran module load CUDA before hand
+    resources:
+        gpus = 1
+    envmodules:
+	    "CUDA/12.1.1"
     params:
-        model = config["model"],
-        dorado = config["dorado_software"],
-	device = config.get("dorado_device", "cpu"),
-	models_dir = "models"
+        model = DORADO_MODEL,
+        dorado = DORADO_BIN,
+	    kit=DORADO_KIT
+        device= 
+        models_dir=
     shell:
         r"""
         mkdir -p $(dirname {output.basecalls})
@@ -50,10 +50,9 @@ rule dorado_basecall_summary:
     input:
         bam = rules.dorado_basecall.output.basecalls
     output:
-	# test run, delete test/ later
-        summary = "test/results/dorado/basecall_summary.tsv"
+        summary = "/results/dorado/basecall_summary.tsv"
     params:
-        dorado = config["dorado_software"]
+        dorado = DORADO_BIN
     shell:
         r"""
         "{params.dorado}" summary {input.bam} > {output.summary}
@@ -64,10 +63,9 @@ rule dorado_demultiplex:
     input:
         bam = rules.dorado_basecall.output.basecalls
     output:
-	# test run, delete test/ later
-        demux_dir = directory(f"{config['output_dir']}/dorado/demux_fastq")
+        demux_dir=directory(DEMUX_DIR)
     params:
-        kit = config["kit"],
+        kit=DORADO_KIT,
         dorado = config["dorado_software"]
     threads: 2
     shell:
