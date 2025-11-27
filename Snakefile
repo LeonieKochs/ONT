@@ -33,7 +33,5 @@ rule all:
         #"results/dorado/basecalls.bam",
         #"results/dorado/basecall_summary.tsv",
         #"results/dorado/demux_fastq",
-        expand("trimmed/barcode{barcode}.fastq.gz", barcode=BARCODES_ALL),
-        expand("dereplicated/barcode{barcode}.fastq.gz", barcode=BARCODES_ALL)
-
-
+        expand(os.path.join(TRIMMED_DIR, "barcode{barcode}.fastq.gz"), barcode=BARCODES_ALL),
+        expand(os.path.join(OUTPUT_DIR, "dada2", "derep", "barcode{barcode}.rds"), barcode=BARCODES_ALL)
