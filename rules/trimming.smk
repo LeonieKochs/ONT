@@ -13,7 +13,7 @@ BARCODES_SET2 = SET2["barcodes"]
 rule trim_primers_set1:
     conda: "../envs/cutadapt.yaml"
     input: 
-        os.path.join(DEMUX_DIR, "barcode{barcode}", "FBD92602_pass_barcode{barcode}_d57d61d8_00000000_0.fastq.gz") # change in config file or add sample id etc
+        os.path.join(DEMUX_DIR, "barcode{barcode}", "FBD92602_pass_barcode{barcode}_d57d61d8_00000000_0.fastq") # change in config file or add sample id etc
     output:
         os.path.join(TRIMMED_DIR, "barcode{wc.barcode}.fastq.gz")
     params:
@@ -45,7 +45,7 @@ rule trim_primers_set1:
 rule trim_primers_set2:
     conda: "../envs/cutadapt.yaml"
     input:
-        os.path.join(DEMUX_DIR, "barcode{barcode}", "FBD92602_pass_barcode{barcode}_d57d61d8_00000000_0.fastq.gz")
+        os.path.join(DEMUX_DIR, "barcode{barcode}", "FBD92602_pass_barcode{barcode}_d57d61d8_00000000_0.fastq")
     output:
         os.path.join(TRIMMED_DIR, "barcode{barcode}.fastq.gz")
     params:
