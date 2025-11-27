@@ -3,7 +3,7 @@ import os
 
 rule dereplicate:
     input:
-        lambda wc: os.path.join(TRIMMED_DIR, f"barcode{wc.barcode}.fastq.gz")
+        os.path.join(TRIMMED_DIR, "barcode{barcode}.fastq.gz")
     output:
         os.path.join(OUTPUT_DIR, "dada2", "derep", "barcode{barcode}.rds")
     conda:
