@@ -41,6 +41,8 @@ rule trim_primers_set1:
         mkdir -p trimmed logs
         cutadapt -g {params.fwd} -a {params.rev} \
           --discard-untrimmed \
+          -m {params.minlen} -M {params.maxlen} \
+          -q 10,10
           -o {output} {input} > logs/barcode{wildcards.barcode}_cutadapt.log
         """
 
@@ -68,6 +70,7 @@ rule trim_primers_set2:
         cutadapt -g {params.fwd} -a {params.rev} \
           --discard-untrimmed \
           -m {params.minlen} -M {params.maxlen} \
+          -q 10,10 \
           -o {output} {input} > logs/barcode{wildcards.barcode}_cutadapt.log
         """
 
