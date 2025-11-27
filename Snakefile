@@ -6,8 +6,8 @@ import os
 configfile: "config/config.yaml"
 READS_DIR     = config["reads_dir"]
 OUTPUT_DIR    = config["output_dir"]
-TRIMMED_DIR   = config["trimmed_fastq_dir"]
-
+# fallback if empty
+TRIMMED_DIR   = config["trimmed_fastq_dir"] or os.path.join(OUTPUT_DIR, "trimmed")
 # If demux_fastq_dir is empty in config, default to OUTPUT_DIR/dorado/demux_fastq
 DEMUX_DIR     = config.get("demux_fastq_dir") or os.path.join(OUTPUT_DIR, "dorado", "demux_fastq")
 
