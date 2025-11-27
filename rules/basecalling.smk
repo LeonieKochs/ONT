@@ -66,7 +66,7 @@ rule dorado_demultiplex:
         demux_dir=directory(DEMUX_DIR)
     params:
         kit=DORADO_KIT,
-        dorado = config["dorado_software"]
+        dorado = DORADO_BIN
     threads: 2
     shell:
         r"""
