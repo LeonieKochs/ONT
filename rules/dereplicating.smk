@@ -3,7 +3,7 @@ import os
 
 rule dereplicate:
     input:
-        lambda w: os.path.join(TRIMMED_DIR, f"barcode{w.barcode}.fastq.gz")
+        lambda wc: os.path.join(TRIMMED_DIR, f"barcode{wc.barcode}.fastq.gz")
     output:
         os.path.join(OUTPUT_DIR, "dada2", "derep", "barcode{barcode}.rds")
     conda:
@@ -14,9 +14,9 @@ rule dereplicate:
 
 rule learn_errors:
     input:
-        expand("dada2/derep/barcode{barcode}.rds", barcode=BARCODES_ALL)
+        expand(os.path.join(OUTPUT_DIR, "dada2", "derep", "barcode{barcode}.rds"), barcode=BARCODES_ALL)
     output:
-        f"{OUTPUT_DIR}/dada2/errors.rds"
+        os.path.join(OUTPUT_DIR, "dada2", "errors.rds")
     conda:
         "../envs/dada2.yaml"
     script:
@@ -25,10 +25,10 @@ rule learn_errors:
 
 rule dada:
     input:
-        derep="dada2/derep/barcode{barcode}.rds",
-        err="dada2/errors.rds"
+        derep = os.path.join(OUTPUT_DIR, "dada2", "derep", "barcode{barcode}.rds"),
+        err   = os.path.join(OUTPUT_DIR, "dada2", "errors.rds")
     output:
-        f"{OUTPUT_DIR}/dada2/dd/barcode{barcode}.rds"
+        os.path.join(OUTPUT_DIR, "dada2", "dd", "barcode{barcode}.rds")
     conda:
         "../envs/dada2.yaml"
     script:
@@ -37,9 +37,9 @@ rule dada:
 
 rule make_seqtab:
     input:
-        expand("dada2/dd/barcode{barcode}.rds", barcode=BARCODES_ALL)
+        expand(os.path.join(OUTPUT_DIR, "dada2", "dd", "barcode{barcode}.rds"), barcode=BARCODES_ALL)
     output:
-        f"{OUTPUT_DIR}/dada2/seqtab.rds"
+        os.path.join(OUTPUT_DIR, "dada2", "seqtab.rds")
     conda:
         "../envs/dada2.yaml"
     script:
@@ -48,9 +48,9 @@ rule make_seqtab:
 
 rule remove_chimeras:
     input:
-        "dada2/seqtab.rds"
+        os.path.join(OUTPUT_DIR, "dada2", "seqtab.rds")
     output:
-        f"{OUTPUT_DIR}/dada2/seqtab.nochim.rds"
+        os.path.join(OUTPUT_DIR, "dada2", "seqtab.nochim.rds")
     conda:
         "../envs/dada2.yaml"
     script:
@@ -59,10 +59,10 @@ rule remove_chimeras:
 
 rule summary_plots:
     input:
-        seqtab="dada2/seqtab.nochim.rds"
+        seqtab = os.path.join(OUTPUT_DIR, "dada2", "seqtab.nochim.rds")
     output:
-        track="dada2/track.tsv",
-        chao="dada2/chao_curves.pdf"
+        track = os.path.join(OUTPUT_DIR, "dada2", "track.tsv"),
+        chao  = os.path.join(OUTPUT_DIR, "dada2", "chao_curves.pdf")
     conda:
         "../envs/dada2.yaml"
     script:
