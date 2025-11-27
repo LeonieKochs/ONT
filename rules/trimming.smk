@@ -45,7 +45,7 @@ rule trim_primers_set1:
 rule trim_primers_set2:
     conda: "../envs/cutadapt.yaml"
     input:
-        os.path.join(DEMUX_DIR, "sample_barcode{barcode}.fastq.gz")
+        os.path.join(DEMUX_DIR, "barcode{barcode}", "FBD92602_pass_barcode{barcode}_d57d61d8_00000000_0.fastq.gz")
     output:
         os.path.join(TRIMMED_DIR, "barcode{barcode}.fastq.gz")
     params:
