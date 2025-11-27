@@ -15,7 +15,7 @@ rule trim_primers_set1:
     input: 
         os.path.join(DEMUX_DIR, "barcode{barcode}", "FBD92602_pass_barcode{barcode}_d57d61d8_00000000_0.fastq") # change in config file or add sample id etc
     output:
-        os.path.join(TRIMMED_DIR, "barcode{wc.barcode}.fastq.gz")
+        os.path.join(TRIMMED_DIR, "barcode{barcode}.fastq.gz")
     params:
         fwd = SET1["fwd"],
         rev = SET1["rev"],
