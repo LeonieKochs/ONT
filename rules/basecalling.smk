@@ -6,7 +6,7 @@ ruleorder:  # just to emphasize model before basecall
 rule dorado_model:
     output:
         # a marker file
-        touch(f"models/DORADO_MODEL.ready")
+        touch("models/DORADO_MODEL.ready")
     params:
         model = DORADO_MODEL,
         dorado = DORADO_BIN
@@ -22,7 +22,7 @@ rule dorado_model:
 rule dorado_basecall:
     input:
         reads_dir = directory(READS_DIR),
-        model_ok = f"models/DORADO_MODEL.ready"
+        model_ok = "models/DORADO_MODEL.ready"
     output:
         basecalls=os.path.join(OUTPUT_DIR, "dorado", "basecalls.bam")
     threads: 4
@@ -34,8 +34,8 @@ rule dorado_basecall:
         model = DORADO_MODEL,
         dorado = DORADO_BIN,
 	    kit=DORADO_KIT
-        device= 
-        models_dir=
+        device= "",
+        models_dir= "models"
     shell:
         r"""
         mkdir -p $(dirname {output.basecalls})
@@ -50,7 +50,7 @@ rule dorado_basecall_summary:
     input:
         bam = rules.dorado_basecall.output.basecalls
     output:
-        summary = "/results/dorado/basecall_summary.tsv"
+        summary = os.path.join(OUTPUT_DIR, "dorado", "basecall_summary.tsv")
     params:
         dorado = DORADO_BIN
     shell:
