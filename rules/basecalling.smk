@@ -21,7 +21,7 @@ rule dorado_model:
 # Basecalling from POD5 directory to BAM
 rule dorado_basecall:
     input:
-        reads_dir = directory(READS_DIR),
+        reads_dir = READS_DIR,
         model_ok = "models/DORADO_MODEL.ready"
     output:
         basecalls=os.path.join(OUTPUT_DIR, "dorado", "basecalls.bam")
