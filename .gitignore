@@ -8,3 +8,6 @@ __pycache__/
 # ignore logs and trimmed data
 logs/
 trimmed/
+
+# ignore models
+models/
