@@ -37,7 +37,7 @@ rule dorado_basecall:
     shell:
         r"""
         mkdir -p $(dirname {output.basecalls})
-        "{params.dorado}" basecaller {params.model} --kit {params.kit} --no-trim {input.reads_dir} > {output.basecalls}
+        "{params.dorado}" basecaller {params.model} --kit-name {params.kit} --no-trim {input.reads_dir} > {output.basecalls}
         """
 	# deleted --emit-bam, should be default
 	# --models-directory {params.model_dir}
