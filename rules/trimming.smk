@@ -64,7 +64,7 @@ rule trim_primers_set1:
         cutadapt -g {params.fwd} -a {params.rev} \
           --discard-untrimmed \
           -m {params.minlen} -M {params.maxlen} \
-          -q 10,10
+          -q 10,10 \
           -o {output} "$fq_dir"/*.fastq \
           > logs/barcode{wildcards.barcode}_cutadapt.log
         """
