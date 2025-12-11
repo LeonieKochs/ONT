@@ -46,7 +46,7 @@ rule trim_primers_set1:
             exit 1
         fi
 
-        fq_dir="${run_fastq_pass}/barcode{wildcards.barcode}"
+        fq_dir="$run_fastq_pass/barcode{wildcards.barcode}"
 
         if [ ! -d "$fq_dir" ]; then
             echo "No directory for barcode {wildcards.barcode} in $run_fastq_pass – creating empty trimmed file."
@@ -99,7 +99,7 @@ rule trim_primers_set2:
             exit 1
         fi
 
-        fq_dir="${run_fastq_pass}/barcode{wildcards.barcode}"
+        fq_dir="$run_fastq_pass/barcode{wildcards.barcode}"
 
         if [ ! -d "$fq_dir" ]; then
             echo "No directory for barcode {wildcards.barcode} in $run_fastq_pass – creating empty trimmed file."
