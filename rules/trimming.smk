@@ -33,14 +33,40 @@ rule trim_primers_set1:
         # -M discard processed reads that are longer than LENGTH
         # --discard-untrimmed discard reads in which no adapter was found 
         r"""
+        set -euo pipefail
+
         mkdir -p {TRIMMED_DIR} logs
-        fq=$(ls {input.demux_dir}/barcode{wildcards.barcode}/*.fastq)
+
+        demux_root="{input.demux_dir}"
+
+        run_fastq_pass=$(find "$demux_root" -maxdepth 5 -type d -name fastq_pass | head -n 1)
+
+        if [ -z "$run_fastq_pass" ]; then
+            echo "ERROR: No fastq_pass directory found under $demux_root" >&2
+            exit 1
+        fi
+
+        fq_dir="${run_fastq_pass}/barcode{wildcards.barcode}"
+
+        if [ ! -d "$fq_dir" ]; then
+            echo "No directory for barcode {wildcards.barcode} in $run_fastq_pass – creating empty trimmed file."
+            gzip -c </dev/null > {output}
+            exit 0
+        fi
+
+        # if there are no FASTQ files, also produce an empty trimmed file
+        if ! ls "$fq_dir"/*.fastq >/dev/null 2>&1; then
+            echo "No FASTQ files for barcode {wildcards.barcode} in $fq_dir – creating empty trimmed file."
+            gzip -c </dev/null > {output}
+            exit 0
+        fi
 
         cutadapt -g {params.fwd} -a {params.rev} \
           --discard-untrimmed \
           -m {params.minlen} -M {params.maxlen} \
           -q 10,10
-          -o {output} {input} > logs/barcode{wildcards.barcode}_cutadapt.log
+          -o {output} "$fq_dir"/*.fastq \
+          > logs/barcode{wildcards.barcode}_cutadapt.log
         """
 
 # Rule for barcodes in set2
@@ -60,14 +86,41 @@ rule trim_primers_set2:
         barcode="|".join(BARCODES_SET2)
     shell:
         r"""
-        mkdir -p trimmed logs
-        fq=$(ls {input.demux_dir}/barcode{wildcards.barcode}/*.fastq)
+        set -euo pipefail
 
-        cutadapt -g {params.fwd} -a {params.rev} \
+        mkdir -p {TRIMMED_DIR} logs
+
+        demux_root="{input.demux_dir}"
+
+        run_fastq_pass=$(find "$demux_root" -maxdepth 5 -type d -name fastq_pass | head -n 1)
+
+        if [ -z "$run_fastq_pass" ]; then
+            echo "ERROR: No fastq_pass directory found under $demux_root" >&2
+            exit 1
+        fi
+
+        fq_dir="${run_fastq_pass}/barcode{wildcards.barcode}"
+
+        if [ ! -d "$fq_dir" ]; then
+            echo "No directory for barcode {wildcards.barcode} in $run_fastq_pass – creating empty trimmed file."
+            gzip -c </dev/null > {output}
+            exit 0
+        fi
+
+        if ! ls "$fq_dir"/*.fastq >/dev/null 2>&1; then
+            echo "No FASTQ files for barcode {wildcards.barcode} in $fq_dir – creating empty trimmed file."
+            gzip -c </dev/null > {output}
+            exit 0
+        fi
+
+        cutadapt \
+          -g {params.fwd} -a {params.rev} \
           --discard-untrimmed \
           -m {params.minlen} -M {params.maxlen} \
           -q 10,10 \
-          -o {output} {input} > logs/barcode{wildcards.barcode}_cutadapt.log
+          -o {output} \
+          "$fq_dir"/*.fastq \
+          > logs/barcode{wildcards.barcode}_cutadapt.log
         """
 
 
