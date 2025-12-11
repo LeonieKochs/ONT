@@ -17,7 +17,7 @@ names(dereps) <- vapply(derep_files, get_sample_name, character(1))
 
 # Learn a single error model across all samples (?)
 # DADA2 supports learnErrors() on derep-class objects.
-err <- learnErrors(dereps, multithread=TRUE)
+err <- learnErrors(dereps, multithread=TRUE, nbases = 5e7, randomize = TRUE)
 
 # Save model
 saveRDS(err, out_file)
