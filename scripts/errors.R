@@ -4,6 +4,8 @@ library(dada2)
 derep_files <- snakemake@input
 out_file <- snakemake@output[[1]]
 
+dir.create(dirname(out_file), recursive = TRUE, showWarnings = FALSE)
+
 # Load dereplication objects into a list
 dereps <- lapply(derep_files, readRDS)
 
