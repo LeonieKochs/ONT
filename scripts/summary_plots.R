@@ -1,8 +1,14 @@
 library(ggplot2)
 
 seqtab_file <- snakemake@input[["seqtab"]]
+
 track_out <- snakemake@output[["track"]]
 chao_out <- snakemake@output[["chao"]]
+asv_wide_out  <- snakemake@output[["asv_wide"]]
+asv_long_out  <- snakemake@output[["asv_long"]]
+asv_fasta_out <- snakemake@output[["asv_fasta"]]
+rare_out      <- snakemake@output[["rarecurve"]]
+accum_out     <- snakemake@output[["accum"]]
 
 dir.create(dirname(track_out), recursive = TRUE, showWarnings = FALSE)
 
@@ -40,15 +46,112 @@ track <- data.frame(
 write.table(track, file=track_out, sep="\t", quote=FALSE, row.names=FALSE)
 
 # plot richness vs depth
-p <- ggplot(track, aes(x=reads_nonchim)) +
-  geom_point(aes(y=observed_asvs), size=2) +
-  geom_point(aes(y=chao1), size=2, shape=1) +
-  labs(
-    x="Reads after chimera removal",
-    y="Richness",
-    title="Observed ASVs and Chao1 vs sequencing depth",
-    subtitle="Filled points = Observed ASVs, open circles = Chao1"
+p <- ggplot(track, aes(x = reads_nonchim)) +
+  geom_point(
+    aes(y = observed_asvs, color = "Observed ASVs"),
+    size = 2,
+    alpha = 0.7
   ) +
-  theme_minimal()
+  geom_point(
+    aes(y = chao1, color = "Chao1"),
+    size = 2,
+    shape = 1,
+    alpha = 0.7
+  ) +
+  scale_color_manual(
+    name = NULL,
+    values = c(
+      "Observed ASVs" = "#1f78b4",  # soft blue
+      "Chao1"         = "#33a02c"   # soft green
+    )
+  ) +
+  labs(
+    x = "Reads after chimera removal",
+    y = "Richness",
+    title = "Observed ASVs and Chao1 vs sequencing depth",
+    subtitle = "Filled points = Observed ASVs, open circles = Chao1"
+  ) +
+  theme_minimal(base_size = 12) +
+  theme(
+    panel.background = element_rect(fill = "white", colour = NA),
+    plot.background  = element_rect(fill = "white", colour = NA),
+    panel.grid.minor = element_blank()
+  )
 
-ggsave(chao_out, p, width=7, height=5)
+ggsave(chao_out, p, width = 7, height = 5)
+
+# -------------------------
+# 2) ASV tables + sequences
+# Original ASV sequences are the column names *before* renaming to ASV IDs
+asv_seqs <- colnames(seqtab.nochim)
+asv_ids  <- paste0("ASV", seq_len(ncol(seqtab.nochim)))
+
+# wide table uses ASV IDs as column names
+seqtab_asv <- seqtab.nochim
+colnames(seqtab_asv) <- asv_ids
+
+wide_tab <- as.data.frame(seqtab_asv)
+wide_tab$sample <- rownames(wide_tab)
+wide_tab <- wide_tab[, c("sample", asv_ids)]
+
+write.table(wide_tab, file = asv_wide_out, sep = "\t", quote = FALSE, row.names = FALSE)
+
+# long table
+# (no extra packages needed)
+long_list <- lapply(seq_len(nrow(seqtab_asv)), function(i) {
+  counts <- seqtab_asv[i, ]
+  idx <- which(counts > 0)
+  if (length(idx) == 0) return(NULL)
+  data.frame(
+    sample = rownames(seqtab_asv)[i],
+    ASV = asv_ids[idx],
+    abundance = as.integer(counts[idx]),
+    sequence = asv_seqs[idx],
+    stringsAsFactors = FALSE
+  )
+})
+long_tab <- do.call(rbind, long_list)
+if (is.null(long_tab)) {
+  long_tab <- data.frame(sample=character(), ASV=character(), abundance=integer(), sequence=character())
+}
+write.table(long_tab, file = asv_long_out, sep = "\t", quote = FALSE, row.names = FALSE)
+
+# FASTA (no Biostrings dependency)
+con <- file(asv_fasta_out, open = "w")
+for (i in seq_along(asv_seqs)) {
+  writeLines(paste0(">", asv_ids[i]), con)
+  writeLines(asv_seqs[i], con)
+}
+close(con)
+
+# -------------------------
+# 3) Rarefaction curves
+# Use vegan if available; otherwise skip with a clear message
+if (requireNamespace("vegan", quietly = TRUE)) {
+  pdf(rare_out, width = 7, height = 5)
+  vegan::rarecurve(seqtab.nochim,
+                   step = 1000,
+                   sample = min(rowSums(seqtab.nochim)),
+                   label = TRUE)
+  title("Rarefaction curves (ASVs vs reads per sample)")
+  dev.off()
+
+  # -------------------------
+  # 4) ASV accumulation plot
+  spec_acc <- vegan::specaccum(seqtab.nochim, method = "random")
+  pdf(accum_out, width = 7, height = 5)
+  plot(spec_acc,
+       xlab = "Number of samples",
+       ylab = "Cumulative ASVs",
+       ci.type = "poly",
+       ci.col = "grey85",
+       col = "#1f78b4",
+       lwd = 2)
+  title("ASV accumulation across samples")
+  dev.off()
+
+} else {
+  # Create placeholder files so Snakemake doesn’t fail
+  writeLines("vegan not available, rarefaction skipped", rare_out)
+  writeLines("vegan not available, accumulation skipped", accum_out)
+}
