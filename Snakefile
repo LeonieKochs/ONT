@@ -52,3 +52,8 @@ rule all:
         # summary outputs
         os.path.join(OUTPUT_DIR, "dada2", "track.tsv"),
         os.path.join(OUTPUT_DIR, "dada2", "chao_curves.pdf")
+        os.path.join(OUTPUT_DIR, "dada2", "asv_table_wide.tsv"),
+        os.path.join(OUTPUT_DIR, "dada2", "asv_table_long.tsv"),
+        os.path.join(OUTPUT_DIR, "dada2", "asv_sequences.fasta"),
+        os.path.join(OUTPUT_DIR, "dada2", "rarefaction_curves.pdf"),
+        os.path.join(OUTPUT_DIR, "dada2", "asv_accumulation.pdf")
