@@ -49,14 +49,14 @@ rule trim_primers_set1:
         fq_dir="$run_fastq_pass/barcode{wildcards.barcode}"
 
         if [ ! -d "$fq_dir" ]; then
-            echo "No directory for barcode {wildcards.barcode} in $run_fastq_pass – creating empty trimmed file."
+            echo "No directory for barcode {wildcards.barcode} in $run_fastq_pass - creating empty trimmed file."
             gzip -c </dev/null > {output}
             exit 0
         fi
 
         # if there are no FASTQ files, also produce an empty trimmed file
         if ! ls "$fq_dir"/*.fastq >/dev/null 2>&1; then
-            echo "No FASTQ files for barcode {wildcards.barcode} in $fq_dir – creating empty trimmed file."
+            echo "No FASTQ files for barcode {wildcards.barcode} in $fq_dir - creating empty trimmed file."
             gzip -c </dev/null > {output}
             exit 0
         fi
@@ -102,13 +102,13 @@ rule trim_primers_set2:
         fq_dir="$run_fastq_pass/barcode{wildcards.barcode}"
 
         if [ ! -d "$fq_dir" ]; then
-            echo "No directory for barcode {wildcards.barcode} in $run_fastq_pass – creating empty trimmed file."
+            echo "No directory for barcode {wildcards.barcode} in $run_fastq_pass - creating empty trimmed file."
             gzip -c </dev/null > {output}
             exit 0
         fi
 
         if ! ls "$fq_dir"/*.fastq >/dev/null 2>&1; then
-            echo "No FASTQ files for barcode {wildcards.barcode} in $fq_dir – creating empty trimmed file."
+            echo "No FASTQ files for barcode {wildcards.barcode} in $fq_dir - creating empty trimmed file."
             gzip -c </dev/null > {output}
             exit 0
         fi
