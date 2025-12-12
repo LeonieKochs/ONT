@@ -4,6 +4,8 @@ seqtab_file <- snakemake@input[["seqtab"]]
 track_out <- snakemake@output[["track"]]
 chao_out <- snakemake@output[["chao"]]
 
+dir.create(dirname(track_out), recursive = TRUE, showWarnings = FALSE)
+
 seqtab.nochim <- readRDS(seqtab_file)
 
 # basic per-sample stats
