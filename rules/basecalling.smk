@@ -28,8 +28,8 @@ rule dorado_basecall:
     threads: 4
     resources:
         gpus = 1
-    envmodules:
-	    "CUDA/12.1.1"
+    #envmodules: # run without conda envs
+	    #"CUDA/12.1.1"
     params:
         model = DORADO_MODEL,
         dorado = DORADO_BIN,
