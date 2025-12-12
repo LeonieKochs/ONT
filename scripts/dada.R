@@ -4,6 +4,8 @@ derep_file <- snakemake@input[["derep"]]
 err_file   <- snakemake@input[["err"]]
 out_file   <- snakemake@output[[1]]
 
+dir.create(dirname(out), recursive = TRUE, showWarnings = FALSE)
+
 drp <- readRDS(derep_file)
 err <- readRDS(err_file)
 
