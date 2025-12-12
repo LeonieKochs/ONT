@@ -61,8 +61,15 @@ rule summary_plots:
     input:
         seqtab = os.path.join(OUTPUT_DIR, "dada2", "seqtab.nochim.rds")
     output:
-        track = os.path.join(OUTPUT_DIR, "dada2", "track.tsv"),
-        chao  = os.path.join(OUTPUT_DIR, "dada2", "chao_curves.pdf")
+        track      = os.path.join(OUTPUT_DIR, "dada2", "track.tsv"),
+        chao       = os.path.join(OUTPUT_DIR, "dada2", "chao_curves.pdf"),
+
+        asv_wide   = os.path.join(OUTPUT_DIR, "dada2", "asv_table_wide.tsv"),
+        asv_long   = os.path.join(OUTPUT_DIR, "dada2", "asv_table_long.tsv"),
+        asv_fasta  = os.path.join(OUTPUT_DIR, "dada2", "asv_sequences.fasta"),
+
+        rarecurve  = os.path.join(OUTPUT_DIR, "dada2", "rarefaction_curves.pdf"),
+        accum      = os.path.join(OUTPUT_DIR, "dada2", "asv_accumulation.pdf")
     conda:
         "../envs/dada2.yaml"
     script:
