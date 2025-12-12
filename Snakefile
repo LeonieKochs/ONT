@@ -33,5 +33,22 @@ rule all:
         #"results/dorado/basecalls.bam",
         #"results/dorado/basecall_summary.tsv",
         #"results/dorado/demux_fastq",
+        # trimming
         expand(os.path.join(TRIMMED_DIR, "barcode{barcode}.fastq.gz"), barcode=BARCODES_ALL),
-        expand(os.path.join(OUTPUT_DIR, "dada2", "derep", "barcode{barcode}.rds"), barcode=BARCODES_ALL)
+
+        # derep
+        expand(os.path.join(OUTPUT_DIR, "dada2", "derep", "barcode{barcode}.rds"), barcode=BARCODES_ALL),
+
+        # error model
+        os.path.join(OUTPUT_DIR, "dada2", "errors.rds"),
+
+        # dada per barcode
+        expand(os.path.join(OUTPUT_DIR, "dada2", "dd", "barcode{barcode}.rds"), barcode=BARCODES_ALL),
+
+        # seqtab + nochim
+        os.path.join(OUTPUT_DIR, "dada2", "seqtab.rds"),
+        os.path.join(OUTPUT_DIR, "dada2", "seqtab.nochim.rds"),
+
+        # summary outputs
+        os.path.join(OUTPUT_DIR, "dada2", "track.tsv"),
+        os.path.join(OUTPUT_DIR, "dada2", "chao_curves.pdf"),
