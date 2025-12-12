@@ -51,4 +51,4 @@ rule all:
 
         # summary outputs
         os.path.join(OUTPUT_DIR, "dada2", "track.tsv"),
-        os.path.join(OUTPUT_DIR, "dada2", "chao_curves.pdf"),
+        os.path.join(OUTPUT_DIR, "dada2", "chao_curves.pdf")
