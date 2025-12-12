@@ -3,6 +3,8 @@ library(dada2)
 seqtab_file <- snakemake@input[[1]]
 out_file <- snakemake@output[[1]]
 
+dir.create(dirname(out), recursive = TRUE, showWarnings = FALSE)
+
 seqtab <- readRDS(seqtab_file)
 
 # with ONT full-length reads, chimera behavior can be a bit different!
