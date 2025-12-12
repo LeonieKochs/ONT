@@ -3,6 +3,8 @@ library(dada2)
 dada_files <- snakemake@input
 out_file <- snakemake@output[[1]]
 
+dir.create(dirname(out_file), recursive = TRUE, showWarnings = FALSE)
+
 # Load denoised dada objects
 dadas <- lapply(dada_files, readRDS)
 
