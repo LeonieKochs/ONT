@@ -3,7 +3,7 @@ library(dada2)
 seqtab_file <- snakemake@input[[1]]
 out_file <- snakemake@output[[1]]
 
-dir.create(dirname(out), recursive = TRUE, showWarnings = FALSE)
+dir.create(dirname(out_file), recursive = TRUE, showWarnings = FALSE)
 
 seqtab <- readRDS(seqtab_file)
 
