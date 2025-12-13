@@ -10,5 +10,5 @@ drp <- readRDS(derep_file)
 err <- readRDS(err_file)
 
 # tune OMEGA_A, band_size, or use pooling!
-dada <- dada(drp, err=err, multithread=TRUE)
+dada <- dada(drp, err=err, multithread=FALSE)
 saveRDS(dada, out_file)
