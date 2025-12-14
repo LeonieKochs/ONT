@@ -1,4 +1,6 @@
 library(ggplot2)
+library(vegan)
+library(tidyverse)
 
 seqtab_file <- snakemake@input[["seqtab"]]
 
@@ -126,15 +128,33 @@ close(con)
 
 # -------------------------
 # 3) Rarefaction curves
-# Use vegan if available; otherwise skip with a clear message
-if (requireNamespace("vegan", quietly = TRUE)) {
-  pdf(rare_out, width = 7, height = 5)
-  vegan::rarecurve(seqtab.nochim,
-                   step = 1000,
-                   sample = min(rowSums(seqtab.nochim)),
-                   label = TRUE)
-  title("Rarefaction curves (ASVs vs reads per sample)")
-  dev.off()
+rare_list <- lapply(1:nrow(seqtab.nochim), function(i) {
+  mat <- seqtab.nochim[i, , drop = FALSE]
+  depth <- rowSums(mat)
+
+  rare <- vegan::rarefy(mat,
+                        sample = seq(1000, depth, by = 5000))
+  data.frame(
+    sample = rownames(mat),
+    reads = seq(1000, depth, by = 5000),
+    asvs = rare
+  )
+})
+
+rare_df <- bind_rows(rare_list)
+rare_df <- left_join(rare_df, primer_df, by = "sample")
+
+ggplot(rare_df,
+       aes(x = reads, y = asvs,
+           color = primer,
+           group = sample)) +
+  geom_line(alpha = 0.7) +
+  labs(
+    x = "Reads per sample",
+    y = "Observed ASVs",
+    title = "Rarefaction curves"
+  ) +
+  theme_bw()
 
   # -------------------------
   # 4) ASV accumulation across samples plot
