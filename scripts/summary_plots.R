@@ -12,7 +12,7 @@ asv_fasta_out <- snakemake@output[["asv_fasta"]]
 rare_out      <- snakemake@output[["rarecurve"]]
 accum_out     <- snakemake@output[["accum"]]
 
-dir.create(dirname(track_out), recursive = TRUE, showWarnings = FALSE)
+dir.create(dirname(track_out), recursive = TRUE, showWarnings = FALSE) # check for all dir?
 
 seqtab.nochim <- readRDS(seqtab_file)
 
