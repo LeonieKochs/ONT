@@ -128,26 +128,42 @@ close(con)
 
 # -------------------------
 # 3) Rarefaction curves
+
+# primer from config for color differentiation
+ps <- snakemake@config[["primer_sets"]]
+
+primer_df <- bind_rows(lapply(names(ps), function(set_key) {
+  barcs <- ps[[set_key]][["barcodes"]]
+  data.frame(
+    sample = paste0("barcode", barcs),
+    primer = ps[[set_key]][["name"]], # show "515FY-926R" and "DIV4_P5-P7"
+    stringsAsFactors = FALSE
+  )
+}))
+
+# Rarefaction curves (colored by primer set)
 rare_list <- lapply(1:nrow(seqtab.nochim), function(i) {
   mat <- seqtab.nochim[i, , drop = FALSE]
-  depth <- rowSums(mat)
+  depth <- as.integer(rowSums(mat))
 
-  rare <- vegan::rarefy(mat,
-                        sample = seq(1000, depth, by = 5000))
+  reads_vec <- seq(1000, depth, by = 5000)
+  reads_vec <- reads_vec[reads_vec <= depth]
+  
+  rare <- vegan::rarefy(mat, sample = reads_vec)
+  
   data.frame(
     sample = rownames(mat),
-    reads = seq(1000, depth, by = 5000),
-    asvs = rare
+    reads = reads_vec,
+    asvs = as.numeric(rare),
+    stringsAsFactors = FALSE
   )
 })
 
 rare_df <- bind_rows(rare_list)
 rare_df <- left_join(rare_df, primer_df, by = "sample")
 
-ggplot(rare_df,
-       aes(x = reads, y = asvs,
-           color = primer,
-           group = sample)) +
+p_rare <- ggplot(rare_df,
+           aes(x = reads, y = asvs, color = primer, group = sample)) +
   geom_line(alpha = 0.7) +
   labs(
     x = "Reads per sample",
@@ -156,23 +172,19 @@ ggplot(rare_df,
   ) +
   theme_bw()
 
-  # -------------------------
-  # 4) ASV accumulation across samples plot
-  # not needed
-  spec_acc <- vegan::specaccum(seqtab.nochim, method = "random")
-  pdf(accum_out, width = 7, height = 5)
-  plot(spec_acc,
-       xlab = "Number of samples",
-       ylab = "Cumulative ASVs",
-       ci.type = "poly",
-       ci.col = "grey85",
-       col = "#1f78b4",
-       lwd = 2)
-  title("ASV accumulation across samples")
-  dev.off()
+ggsave(rare_out, p_rare, width = 7, height = 5)
 
-} else {
-  # Create placeholder files so Snakemake doesn’t fail
-  writeLines("vegan not available, rarefaction skipped", rare_out)
-  writeLines("vegan not available, accumulation skipped", accum_out)
-}
+# -------------------------
+# 4) ASV accumulation across samples plot
+# not needed
+spec_acc <- vegan::specaccum(seqtab.nochim, method = "random")
+pdf(accum_out, width = 7, height = 5)
+plot(spec_acc,
+     xlab = "Number of samples",
+     ylab = "Cumulative ASVs",
+     ci.type = "poly",
+     ci.col = "grey85",
+     col = "#1f78b4",
+     lwd = 2)
+title("ASV accumulation across samples")
+dev.off()
