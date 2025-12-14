@@ -11,3 +11,6 @@ trimmed/
 
 # ignore models
 models/
+
+# ignore pdfs
+*.pdf
