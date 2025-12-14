@@ -137,7 +137,8 @@ if (requireNamespace("vegan", quietly = TRUE)) {
   dev.off()
 
   # -------------------------
-  # 4) ASV accumulation plot
+  # 4) ASV accumulation across samples plot
+  # not needed
   spec_acc <- vegan::specaccum(seqtab.nochim, method = "random")
   pdf(accum_out, width = 7, height = 5)
   plot(spec_acc,
