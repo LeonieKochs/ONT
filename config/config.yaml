@@ -11,7 +11,7 @@ reads_dir: ""
 # If you want to START from already demuxed FASTQs instead (skip dorado),
 # set this to the directory containing barcode01, barcode02, ...
 # and DON'T run the dorado rules.
-demux_fastq_dir: "/scratch/kochsl99/ONT/data_amplicons1/dorado/fastq_pass"   # leave empty if you want the workflow to create its own demux dir
+demux_fastq_dir: "/scratch/kochsl99/ONT/data_amplicons1/dorado"   # leave empty if you want the workflow to create its own demux dir
 
 # ---outputs--------------------------------------------------------------------
 # base ouput root
