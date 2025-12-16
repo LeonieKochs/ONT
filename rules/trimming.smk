@@ -13,7 +13,8 @@ BARCODES_SET2 = SET2["barcodes"]
 rule trim_primers_set1:
     conda: "../envs/cutadapt.yaml"
     input: 
-        demux_dir = rules.dorado_demultiplex.output.demux_dir # change in config file or add sample id etc
+        demux_dir = DEMUX_DIR
+        #demux_dir = rules.dorado_demultiplex.output.demux_dir # change in config file or add sample id etc
     output:
         os.path.join(TRIMMED_DIR, "barcode{barcode}.fastq.gz")
     params:
