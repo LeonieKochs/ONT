@@ -2,7 +2,8 @@
 # ---input--------------------------------------------------------------------
 # location of pod5 (sequencing data)
 # used in dorado_basecall
-reads_dir: "/scratch/kochsl99/ONT/data_amplicons2/pod5"
+reads_dir: ""
+# "/scratch/kochsl99/ONT/data_amplicons2/pod5"
 # "/home/leonie/projects/testNanopore/data/pod5"
 # "/scratch/{USER}/ONT/data_amplicons2/pod5"
 
@@ -10,11 +11,11 @@ reads_dir: "/scratch/kochsl99/ONT/data_amplicons2/pod5"
 # If you want to START from already demuxed FASTQs instead (skip dorado),
 # set this to the directory containing barcode01, barcode02, ...
 # and DON'T run the dorado rules.
-demux_fastq_dir: ""   # leave empty if you want the workflow to create its own demux dir
+demux_fastq_dir: "/scratch/kochsl99/ONT/data_amplicons1/dorado/fastq_pass/merged"   # leave empty if you want the workflow to create its own demux dir
 
 # ---outputs--------------------------------------------------------------------
 # base ouput root
-output_dir: "/scratch/kochsl99/ONT/data_amplicons2_snakemake"
+output_dir: "/scratch/kochsl99/ONT/data_amplicons1_snakemake"
 
 # optional
 # used in dereplicting
@@ -44,7 +45,7 @@ primer_sets:
     minlen: 200
     maxlen: 450
     # barcode01, barcode 02, ...
-    barcodes: ["01","02","03","04"] 
+    barcodes: ["01","02","03","04","05","06","07"] # for amplicons1
     
   set2:
     name: "DIV4_P5-P7"
@@ -52,4 +53,4 @@ primer_sets:
     rev: "CTCTGACAATGGAATACGAATA"
     minlen: 200
     maxlen: 450
-    barcodes: ["05","06","07","08","09","10","11","12"] 
+    barcodes: ["08","09","10","11","12","13","14","15","16","17","18","19","20","21","22","23"] # for amplicons1
