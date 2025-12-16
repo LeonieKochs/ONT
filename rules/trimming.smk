@@ -55,8 +55,8 @@ rule trim_primers_set1:
             exit 0
         fi
 
-        # if there are no FASTQ files, also produce an empty trimmed file
-        if ! ls "$fq_dir"/*.fastq >/dev/null 2>&1; then
+        # if there are no FASTQ files (fastq or fastq.gz), also produce an empty trimmed file
+        if ! ls "$fq_dir"/*.fastq* >/dev/null 2>&1; then
             echo "No FASTQ files for barcode {wildcards.barcode} in $fq_dir - creating empty trimmed file."
             gzip -c </dev/null > {output}
             exit 0
@@ -66,7 +66,7 @@ rule trim_primers_set1:
           --discard-untrimmed \
           -m {params.minlen} -M {params.maxlen} \
           -q 10,10 \
-          -o {output} "$fq_dir"/*.fastq \
+          -o {output} "$fq_dir"/*.fastq* \
           > logs/barcode{wildcards.barcode}_cutadapt.log
         """
 
@@ -109,7 +109,7 @@ rule trim_primers_set2:
             exit 0
         fi
 
-        if ! ls "$fq_dir"/*.fastq >/dev/null 2>&1; then
+        if ! ls "$fq_dir"/*.fastq* >/dev/null 2>&1; then
             echo "No FASTQ files for barcode {wildcards.barcode} in $fq_dir - creating empty trimmed file."
             gzip -c </dev/null > {output}
             exit 0
@@ -121,7 +121,7 @@ rule trim_primers_set2:
           -m {params.minlen} -M {params.maxlen} \
           -q 10,10 \
           -o {output} \
-          "$fq_dir"/*.fastq \
+          "$fq_dir"/*.fastq* \
           > logs/barcode{wildcards.barcode}_cutadapt.log
         """
 
