@@ -30,9 +30,9 @@ include: "rules/dereplicating.smk"
 rule all:
     input:
         # basecalling + summary + demux
-        #"results/dorado/basecalls.bam",
-        #"results/dorado/basecall_summary.tsv",
-        #"results/dorado/demux_fastq",
+        # os.path.join(OUTPUT_DIR, "dorado", "basecalls.bam"),
+        # os.path.join(OUTPUT_DIR, "dorado", "basecall_summary.tsv"),
+        # os.paht.join(OUTPUT_DIR; "dorado", "demux_fastq"),
         # trimming
         expand(os.path.join(TRIMMED_DIR, "barcode{barcode}.fastq.gz"), barcode=BARCODES_ALL),
 
