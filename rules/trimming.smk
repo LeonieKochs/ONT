@@ -74,7 +74,8 @@ rule trim_primers_set1:
 rule trim_primers_set2:
     conda: "../envs/cutadapt.yaml"
     input:
-        demux_dir = rules.dorado_demultiplex.output.demux_dir
+        demux_dir = DEMUX_DIR
+        # demux_dir = rules.dorado_demultiplex.output.demux_dir
     output:
         os.path.join(TRIMMED_DIR, "barcode{barcode}.fastq.gz")
     params:
