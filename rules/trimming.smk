@@ -36,7 +36,8 @@ rule trim_primers_set1:
         r"""
         set -euo pipefail
 
-        mkdir -p {TRIMMED_DIR} logs
+        LOGDIR="{TRIMMED_DIR}/logs"
+        mkdir -p {TRIMMED_DIR} "$LOGDIR"
 
         demux_root="{input.demux_dir}"
 
@@ -67,7 +68,7 @@ rule trim_primers_set1:
           -m {params.minlen} -M {params.maxlen} \
           -q 10,10 \
           -o {output} "$fq_dir"/*.fastq* \
-          > logs/barcode{wildcards.barcode}_cutadapt.log
+          > "$LOGDIR/barcode{wildcards.barcode}_cutadapt.log"
         """
 
 # Rule for barcodes in set2
@@ -90,7 +91,8 @@ rule trim_primers_set2:
         r"""
         set -euo pipefail
 
-        mkdir -p {TRIMMED_DIR} logs
+        LOGDIR="{TRIMMED_DIR}/logs"
+        mkdir -p {TRIMMED_DIR} "$LOGDIR"
 
         demux_root="{input.demux_dir}"
 
@@ -122,7 +124,7 @@ rule trim_primers_set2:
           -q 10,10 \
           -o {output} \
           "$fq_dir"/*.fastq* \
-          > logs/barcode{wildcards.barcode}_cutadapt.log
+          > "$LOGDIR/barcode{wildcards.barcode}_cutadapt.log"
         """
 
 
