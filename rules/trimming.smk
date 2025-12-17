@@ -104,6 +104,8 @@ rule trim_primers_set2:
         LOGDIR="{TRIMMED_DIR}/logs"
         mkdir -p {TRIMMED_DIR} "$LOGDIR"
 
+        demux_root="{input.demux_dir}"
+
         # demux_root can be:
         #  - the directory that CONTAINS fastq_pass (amplicons2-style),
         #  - OR fastq_pass itself (amplicons1-style)
