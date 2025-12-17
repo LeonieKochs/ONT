@@ -41,12 +41,22 @@ rule trim_primers_set1:
 
         demux_root="{input.demux_dir}"
 
-        run_fastq_pass=$(find "$demux_root" -maxdepth 5 -type d -name fastq_pass | head -n 1)
-
-        if [ -z "$run_fastq_pass" ]; then
-            echo "ERROR: No fastq_pass directory found under $demux_root" >&2
+        # demux_root can be:
+        #  - the directory that CONTAINS fastq_pass (amplicons2-style),
+        #  - OR fastq_pass itself (amplicons1-style)
+        if [ "$(basename "$demux_root")" = "fastq_pass" ]; then
+            run_fastq_pass="$demux_root"
+        elif [ -d "$demux_root/fastq_pass" ]; then
+            run_fastq_pass="$demux_root/fastq_pass"
+        else
+            run_fastq_pass=$(find "$demux_root" -maxdepth 8 -type d -name fastq_pass | head -n 1)
+        fi
+        
+        if [ -z "${run_fastq_pass:-}" ] || [ ! -d "$run_fastq_pass" ]; then
+            echo "ERROR: No fastq_pass directory found (or provided) at/under $demux_root" >&2
             exit 1
         fi
+
 
         fq_dir="$run_fastq_pass/barcode{wildcards.barcode}"
 
@@ -94,14 +104,22 @@ rule trim_primers_set2:
         LOGDIR="{TRIMMED_DIR}/logs"
         mkdir -p {TRIMMED_DIR} "$LOGDIR"
 
-        demux_root="{input.demux_dir}"
-
-        run_fastq_pass=$(find "$demux_root" -maxdepth 5 -type d -name fastq_pass | head -n 1)
-
-        if [ -z "$run_fastq_pass" ]; then
-            echo "ERROR: No fastq_pass directory found under $demux_root" >&2
+        # demux_root can be:
+        #  - the directory that CONTAINS fastq_pass (amplicons2-style),
+        #  - OR fastq_pass itself (amplicons1-style)
+        if [ "$(basename "$demux_root")" = "fastq_pass" ]; then
+            run_fastq_pass="$demux_root"
+        elif [ -d "$demux_root/fastq_pass" ]; then
+            run_fastq_pass="$demux_root/fastq_pass"
+        else
+            run_fastq_pass=$(find "$demux_root" -maxdepth 8 -type d -name fastq_pass | head -n 1)
+        fi
+        
+        if [ -z "${run_fastq_pass:-}" ] || [ ! -d "$run_fastq_pass" ]; then
+            echo "ERROR: No fastq_pass directory found (or provided) at/under $demux_root" >&2
             exit 1
         fi
+
 
         fq_dir="$run_fastq_pass/barcode{wildcards.barcode}"
 
