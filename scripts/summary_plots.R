@@ -145,8 +145,10 @@ primer_df <- bind_rows(lapply(names(ps), function(set_key) {
 rare_list <- lapply(1:nrow(seqtab.nochim), function(i) {
   mat <- seqtab.nochim[i, , drop = FALSE]
   depth <- as.integer(rowSums(mat))
+  start <- if (depth >= 1000) 1000 else 1
+  step <- if (depth >= 10000) 5000 else if (depth >= 2000) 500 else 100
 
-  reads_vec <- seq(1000, depth, by = 5000)
+  reads_vec <- seq(start, depth, by = step)
   reads_vec <- reads_vec[reads_vec <= depth]
   
   rare <- vegan::rarefy(mat, sample = reads_vec)
