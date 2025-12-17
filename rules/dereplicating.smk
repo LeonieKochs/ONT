@@ -31,6 +31,8 @@ rule dada:
         err   = os.path.join(OUTPUT_DIR, "dada2", "errors.rds")
     output:
         os.path.join(OUTPUT_DIR, "dada2", "dd", "barcode{barcode}.rds")
+    resources:
+        mem_mb=20000
     conda:
         "../envs/dada2.yaml"
     script:
