@@ -72,12 +72,14 @@ rule trim_primers_set1:
             exit 0
         fi
 
+        zcat -f "$fq_dir"/*.fastq* | \
         cutadapt -g {params.fwd} -a {params.rev} \
           --discard-untrimmed \
           -m {params.minlen} -M {params.maxlen} \
           -q 10,10 \
-          -o {output} "$fq_dir"/*.fastq* \
+          -o {output} - \
           > "$LOGDIR/barcode{wildcards.barcode}_cutadapt.log"
+
         """
 
 # Rule for barcodes in set2
@@ -135,14 +137,14 @@ rule trim_primers_set2:
             exit 0
         fi
 
-        cutadapt \
-          -g {params.fwd} -a {params.rev} \
+        zcat -f "$fq_dir"/*.fastq* | \
+        cutadapt -g {params.fwd} -a {params.rev} \
           --discard-untrimmed \
           -m {params.minlen} -M {params.maxlen} \
           -q 10,10 \
-          -o {output} \
-          "$fq_dir"/*.fastq* \
+          -o {output} - \
           > "$LOGDIR/barcode{wildcards.barcode}_cutadapt.log"
+
         """
 
 
