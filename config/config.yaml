@@ -45,6 +45,7 @@ primer_sets:
     minlen: 200
     maxlen: 450
     # barcode01, barcode 02, ...
+    # add phred score !
     barcodes: ["01","02","03","04","05","06","07"] # for amplicons1
     
   set2:
