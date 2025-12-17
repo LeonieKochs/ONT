@@ -52,8 +52,7 @@ rule trim_primers_set1:
             run_fastq_pass=$(find "$demux_root" -maxdepth 8 -type d -name fastq_pass | head -n 1)
         fi
         
-        if [ -z "${run_fastq_pass:-}" ] || [ ! -d "$run_fastq_pass" ]; then
-            echo "ERROR: No fastq_pass directory found (or provided) at/under $demux_root" >&2
+        if [ -z "${{run_fastq_pass:-}}" ] || [ ! -d "$run_fastq_pass" ]; then            echo "ERROR: No fastq_pass directory found (or provided) at/under $demux_root" >&2
             exit 1
         fi
 
@@ -117,8 +116,7 @@ rule trim_primers_set2:
             run_fastq_pass=$(find "$demux_root" -maxdepth 8 -type d -name fastq_pass | head -n 1)
         fi
         
-        if [ -z "${run_fastq_pass:-}" ] || [ ! -d "$run_fastq_pass" ]; then
-            echo "ERROR: No fastq_pass directory found (or provided) at/under $demux_root" >&2
+        if [ -z "${{run_fastq_pass:-}}" ] || [ ! -d "$run_fastq_pass" ]; then            echo "ERROR: No fastq_pass directory found (or provided) at/under $demux_root" >&2
             exit 1
         fi
 
