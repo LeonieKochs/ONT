@@ -32,7 +32,7 @@ rule all:
         # basecalling + summary + demux
         os.path.join(OUTPUT_DIR, "dorado", "basecalls.bam"),
         os.path.join(OUTPUT_DIR, "dorado", "basecall_summary.tsv"),
-        os.paht.join(OUTPUT_DIR; "dorado", "demux_fastq"),
+        os.path.join(OUTPUT_DIR; "dorado", "demux_fastq"),
         # trimming
         expand(os.path.join(TRIMMED_DIR, "barcode{barcode}.fastq.gz"), barcode=BARCODES_ALL),
 
